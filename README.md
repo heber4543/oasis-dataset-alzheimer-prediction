@@ -5,6 +5,9 @@
 ### DATASET
 The Open Access Series of Imaging Studies (OASIS) is a series of neuroimaging data sets that are publicly available for study and analysis. The present MRI data set consists of a longitudinal collection of 150 subjects aged 60 to 96 years, all acquired on the same scanner using identical sequences. Each subject was scanned on two or more visits, separated by at least 1 year, for a total of 373 imaging sessions (Marcus et al., 2009).
 
+### IMPLEMENTATION
+This app implements two classification models: Support Vector Machine (SVM) and Logistic Regression. The same dataset is used in two variations: the first variation includes only the first visit of each patient, as reported in the literature (150 patients). The second variation treats each visit as a distinct patient, resulting in a total of 373 patients. Consequently, there are four models: a) Logistic Regression trained with 150 patients, b) Logistic Regression trained with 373 patients, c) SVM trained with 150 patients, and d) SVM trained with 373 patients.
+
 ### Acces
 Click [here](https://oasis-dataset-alzheimer-prediction.streamlit.app/) to access the app
 
