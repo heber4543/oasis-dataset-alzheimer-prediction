@@ -77,7 +77,10 @@ preprocessor = ColumnTransformer(
             ('imputer', SimpleImputer(strategy='mean')),
             ('scaler', StandardScaler())
         ]), numeric_features),
-        ('cat', OneHotEncoder(drop='first'), categorical_features)
+        ('cat', Pipeline(steps=[
+            ('imputer', SimpleImputer(strategy='most_frequent')),
+            ('onehot', OneHotEncoder(drop='first'))
+        ]), categorical_features)
     ])
 # aplicar transformaciones
 pipeline = Pipeline(steps=[
@@ -115,7 +118,10 @@ preprocessor = ColumnTransformer(
             ('imputer', SimpleImputer(strategy='mean')),
             ('scaler', StandardScaler())
         ]), numeric_features),
-        ('cat', OneHotEncoder(drop='first'), categorical_features)
+        ('cat', Pipeline(steps=[
+            ('imputer', SimpleImputer(strategy='most_frequent')),
+            ('onehot', OneHotEncoder(drop='first'))
+        ]), categorical_features)
     ])
 # aplicar transformaciones
 pipeline = Pipeline(steps=[
@@ -128,6 +134,7 @@ y_373 = oasis_copy['Group']
 X_train, X_test, y_373_train, y_373_test = train_test_split(X_373, y_373, test_size=0.2, random_state=42, stratify=y_373)
 # aplicar el pipeline al conjunto de entrenamiento
 X_373_train = pipeline.fit_transform(X_train)
+joblib.dump(pipeline, 'pipeline_373.pkl')
 X_373_test = pipeline.transform(X_test)
 # verificar la separacion
 # set entrenamiento

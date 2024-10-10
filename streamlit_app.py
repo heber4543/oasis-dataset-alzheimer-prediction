@@ -1,36 +1,39 @@
+# importar librerias
 import streamlit as st
 import joblib
 import pandas as pd
-from sklearn.compose import ColumnTransformer
-from sklearn.impute import SimpleImputer
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
-
-# Definir características categóricas y numéricas
-categorical_features = ['M/F']
-numeric_features = ['MR Delay', 'Age', 'EDUC', 'SES', 'MMSE', 'CDR', 'eTIV', 'nWBV', 'ASF']
-
-# Preprocesador para transformar las columnas categóricas y numéricas
-preprocessor = ColumnTransformer(
-    transformers=[
-        ('num', Pipeline(steps=[
-            ('imputer', SimpleImputer(strategy='mean')),
-            ('scaler', StandardScaler())
-        ]), numeric_features),
-        ('cat', OneHotEncoder(drop='first'), categorical_features)
-    ]
-)
-
-# Cargar los modelos
+# cargar el pipeline
+preprocessor = joblib.load('pipeline_373.pkl')
+# cargar los modelos
 lr_150 = joblib.load('best_lr_model_150.pkl')
 lr_373 = joblib.load('best_lr_model_373.pkl')
 svm_150 = joblib.load('best_svm_model_150.pkl')
 svm_373 = joblib.load('best_svm_model_373.pkl')
-
-# Interfaz del usuario
+# titulo
 st.title("OASIS DATASET - ALZHEIMER PREDICTION")
-
-# Entradas del usuario
+# descripcion del dataset
+descripcion = """
+The Open Access Series of Imaging Studies (OASIS) is a series of
+neuroimaging data sets that are publicly available for study and
+analysis. The present MRI data set consists of a longitudinal collection of 150 subjects aged 60 to 96 years, all acquired on the same
+scanner using identical sequences. Each subject was scanned
+on two or more visits, separated by at least 1 year, for a total of
+373 imaging sessions (Marcus et al., 2009).
+"""
+st.markdown(descripcion)
+# descripcion de la implementacion
+st.subheader("IMPLEMENTATION")
+app = """
+This app implements two classification models: Support Vector Machine (SVM) and Logistic Regression. 
+The same dataset is used in two variations: the first variation includes only the first visit of each patient, 
+as reported in the literature (150 patients). The second variation treats each visit as a distinct patient, 
+resulting in a total of 373 patients. Consequently, there are four models: a) Logistic Regression trained 
+with 150 patients, b) Logistic Regression trained with 373 patients, c) SVM trained with 150 patients, 
+and d) SVM trained with 373 patients.
+"""
+st.markdown(app)
+# entradas del usuario
+st.subheader("ENTER YOUR DATA")
 mr_delay = st.number_input("MR Delay")
 age = st.number_input("Age")
 educ = st.number_input("Years of Education")
@@ -39,10 +42,9 @@ mmse = st.number_input("Mini-Mental State Examination Score")
 cdr = st.number_input("Clinical Dementia Rating")
 etiv = st.number_input("Estimated Total Intracranial Volume")
 nwbv = st.number_input("Normalized Whole-Brain Volume")
-sex = st.selectbox("Gender", ['M', 'F'])
+sex = st.selectbox("Sex", ['M', 'F'])
 asf = st.number_input("Atlas Scaling Factor")
-
-# DataFrame con las entradas del usuario
+# crear dataFrame con las entradas del usuario
 input_df = pd.DataFrame({
     'MR Delay': [mr_delay],
     'Age': [age],
@@ -53,32 +55,29 @@ input_df = pd.DataFrame({
     'eTIV': [etiv],
     'nWBV': [nwbv],
     'ASF': [asf],
-    'M/F': [sex]  # Cambié 'sex' a 'M/F' para que coincida con el preprocesador
+    'M/F': [sex]  
 })
-
-# Seleccionar modelo
+# seleccion del modelo
 models = {
     "Linear Regression with 150 dataset": lr_150,
     "Linear Regression with 373 dataset": lr_373,
     "Support Vector Machine with 150 dataset": svm_150,
     "Support Vector Machine with 373 dataset": svm_373
 }
-
 selected_model = st.selectbox("Select the model you prefer", list(models.keys()))
-
-# Predicción
+# predicción
 if st.button("Predict"):
     try:
-        # Aplicar el preprocesador a los datos de entrada
-        input_processed = preprocessor.fit_transform(input_df)  # Cambiado a fit_transform
-
-        # Seleccionar el modelo
+        # aplicar el preprocesador a los datos de entrada
+        input_processed = preprocessor.transform(input_df) 
+        # seleccionar el modelo
         model = models[selected_model]
-
-        # Realizar la predicción
+        # predicción
         prediction = model.predict(input_processed)
-
-        # Mostrar la predicción
-        st.write(f"The prediction of {selected_model} is: {prediction[0]}")
+        # mostrar la predicción
+        if prediction[0] == 0:
+            st.write("The prediction of {} is: Non Demented".format(selected_model))
+        else:
+            st.write("The prediction of {} is: Demented".format(selected_model))
     except Exception as e:
         st.error(f"Prediction error: {e}")
