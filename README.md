@@ -1,6 +1,6 @@
 # 
 
-This is a project for the Machine Learning course in the Master's program in Computer Engineering
+### This is a project for the Machine Learning course in the Master's program in Computer Engineering
 
 ### DATASET
 The Open Access Series of Imaging Studies (OASIS) is a series of neuroimaging data sets that are publicly available for study and analysis. The present MRI data set consists of a longitudinal collection of 150 subjects aged 60 to 96 years, all acquired on the same scanner using identical sequences. Each subject was scanned on two or more visits, separated by at least 1 year, for a total of 373 imaging sessions (Marcus et al., 2009).
