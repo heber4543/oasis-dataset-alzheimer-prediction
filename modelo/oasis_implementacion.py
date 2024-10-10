@@ -41,7 +41,7 @@ from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, precision_score, recall_score, f1_score
 import joblib
 # obtener datos
-ruta = '/workspaces/oasis-dataset-alzheimer-prediction/modelo/oasis_longitudinal_demographics-8d83e569fa2e2d30.xlsx'
+ruta = 'modelo/oasis_longitudinal_demographics-8d83e569fa2e2d30.xlsx'
 oasis = pd.read_excel (ruta)
 oasis_copy = oasis.copy()
 
