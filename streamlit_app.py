@@ -5,6 +5,21 @@ from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
+import subprocess
+
+# función para ejecutar el archivo
+def run_script(script_path):
+    try:
+        result = subprocess.run(['python', script_path], capture_output=True, text=True)
+        return result.stdout, result.stderr
+    except Exception as e:
+        return str(e), None
+
+# nombre del archivo
+script_name = 'tu_script.py'
+
+# ejecutar archivo
+stdout, stderr = run_script(script_name)
 
 # Definir características categóricas y numéricas
 categorical_features = ['M/F']
