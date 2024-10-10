@@ -22,10 +22,10 @@ preprocessor = ColumnTransformer(
 )
 
 # Cargar los modelos
-lr_150 = joblib.load('modelo/best_lr_model_150.pkl')
-lr_373 = joblib.load('modelo/best_lr_model_373.pkl')
-svm_150 = joblib.load('modelo/best_svm_model_150.pkl')
-svm_373 = joblib.load('modelo/best_svm_model_373.pkl')
+lr_150 = joblib.load('best_lr_model_150.pkl')
+lr_373 = joblib.load('best_lr_model_373.pkl')
+svm_150 = joblib.load('best_svm_model_150.pkl')
+svm_373 = joblib.load('best_svm_model_373.pkl')
 
 # Interfaz del usuario
 st.title("OASIS DATASET - ALZHEIMER PREDICTION")
