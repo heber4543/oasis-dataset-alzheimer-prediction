@@ -16,7 +16,7 @@ def run_script(script_path):
         return str(e), None
 
 # nombre del archivo
-script_name = 'tu_script.py'
+script_name = 'modelo/oasis_implementacion.py'
 
 # ejecutar archivo
 stdout, stderr = run_script(script_name)
