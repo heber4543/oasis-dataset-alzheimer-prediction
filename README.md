@@ -1,19 +1,20 @@
-# 🎈 Blank app template
+# 
 
-A simple Streamlit app template for you to modify!
+This is a project for the Machine Learning course in the Master's program in Computer Engineering
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://blank-app-template.streamlit.app/)
+### Acces
+Click [here](https://oasis-dataset-alzheimer-prediction.streamlit.app/) to access the app
 
-### How to run it on your own machine
+### Dataset
+To load the OASIS dataset, click [here](https://sites.wustl.edu/oasisbrains/home/oasis-2/).
+If you prefer, you can download it from this repository, but for ethical reasons, it’s better to do it from the official page.
 
-1. Install the requirements
+### Data exploration and model training and test
+The source code where the dataset was explored, the data was prepared, and the model was developed can be found in the `modelo` directory, in the file named `oasis_completo.ipynb`. In this file, the data from the dataset is explored, and the results of logistic regression are compared to logistic regression using K-Fold. Additionally, linear, polynomial, and Gaussian SVM models are compared.
+In the `Model`, there are also other file: `oasis_implementacion.py`, It is the .py file that was used to train the best models; additionally, a pipeline for data processing was implemented.
 
-   ```
-   $ pip install -r requirements.txt
-   ```
+### Best model
+In the folder, you will find 5 .pkl files corresponding to the models and the pipeline used in the app.
 
-2. Run the app
-
-   ```
-   $ streamlit run streamlit_app.py
-   ```
+### APP
+You will find two files: `requirements.txt` and `streamlit_app.py`. The first contains the libraries required to run the app. The second is the app code (model implementation and interface).
